@@ -14,44 +14,51 @@ import com.example.demo.dto.Article;
 public interface ArticleDao {
 
 	@Insert("""
-			INSERT INTO article(
-			    SET regDate = NOW()
-			    	, updateDate = NOW()
+			INSERT INTO article
+				SET regDate = NOW()
+					, updateDate = NOW()
+					, title = #{title}
+					, `body` = #{body}
 			""")
-	public void writeArticle(int id, String title, String body);
+	public void writeArticle(String title, String body);
 
 	@Select("""
 			SELECT *
-			   FROM article
-			   ORDER BY id DESC
+				FROM article
+				ORDER BY id DESC
 			""")
 	public List<Article> getArticles();
 
 	@Select("""
 			SELECT *
-			   FROM article
-			   WHERE id = #{id}
+				FROM article
+				WHERE id = #{id}
 			""")
 	public Article getArticleById(int id);
 
 	@Update("""
 			<script>
 			UPDATE article
-			   SET updateDate = NOW()
-			      <if test="title != null and title != ''">
-			         , title = #{title}
-			      </if>
-			      <if test="body != null and body != ''">
-			         , `body` = #{body}
-			      </if>
-			   WHERE id = #{id}
+				SET updateDate = NOW()
+					<if test="title != null and title != ''">
+						, title = #{title}
+					</if>
+					<if test="body != null and body != ''">
+						, `body` = #{body}
+					</if>
+				WHERE id = #{id}
 			</script>
 			""")
 	public void modifyArticle(int id, String title, String body);
 
 	@Delete("""
 			DELETE FROM article
-			   WHERE id = #{id}
+				WHERE id = #{id}
 			""")
 	public void deleteArticle(int id);
+
+	@Select("""
+			SELECT LAST_INSERT_ID();
+			""")
+	public int getLastInsertId();
 }

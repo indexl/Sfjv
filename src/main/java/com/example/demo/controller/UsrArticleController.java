@@ -7,93 +7,91 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.example.demo.dto.Article;
+import com.example.demo.dto.ResultData;
 import com.example.demo.service.ArticleService;
+import com.example.demo.util.Util;
 
 @Controller
-public class UsrArticleController { 
+public class UsrArticleController {
 
-   private int lastArticleId;
-   private ArticleService articleService;
+	private ArticleService articleService;
 
-   public UsrArticleController(ArticleService articleService) {
-      this.articleService = articleService;
-      this.lastArticleId = 3;
-   }
+	public UsrArticleController(ArticleService articleService) {
+		this.articleService = articleService;
+	}
 
-   @GetMapping("/usr/article/doWrite")
-   @ResponseBody
-   public Article doWrite(String title, String body) {
+	@GetMapping("/usr/article/doWrite")
+	@ResponseBody
+	public ResultData<Article> doWrite(String title, String body) {
 
-      /*
-       * lastArticleId++; 
-       * articleService.writeArticle(lastArticleId, title, body);
-       * return article;
-       */
+		if (Util.isEmpty(title)) {
+			return ResultData.from("F-1", "제목을 입력해주세요");
+		}
 
-      Article article = new Article();
+		if (Util.isEmpty(body)) {
+			return ResultData.from("F-2", "내용을 입력해주세요");
+		}
 
-      // ID 증가
-      lastArticleId++;
+		articleService.writeArticle(title, body);
 
-      // Article 객체에 값 설정
-      article.setId(lastArticleId);
-      article.setTitle(title);
-      article.setBody(body);
+		int id = articleService.getLastInsertId();
 
-      // 서비스 레이어를 통해 DB에 저장
-      articleService.writeArticle(lastArticleId, title, body);
+		return ResultData.from("S-1", String.format("%d번 게시물을 작성했습니다", id), articleService.getArticleById(id));
+	}
 
-      // Article 객체 반환
-      return article;
-      
-   }
+	@GetMapping("/usr/article/showList")
+	@ResponseBody
+	public ResultData<List<Article>> showList() {
 
-   @GetMapping("/usr/article/showList")
-   @ResponseBody
-   public List<Article> showList() {
-      return articleService.getArticles();
-   }
+		List<Article> articles = articleService.getArticles();
 
-   @GetMapping("/usr/article/showDetail")
-   @ResponseBody
-   public Object showDetail(int id) {
+		if (articles.size() == 0) {
+			return ResultData.from("F-1", "게시물이 존재하지 않습니다");
+		}
 
-      Article foundArticle = articleService.getArticleById(id);
+		return ResultData.from("S-1", "리스트 조회 성공", articles);
+	}
 
-      if (foundArticle == null) {
-         return id + "번 게시물은 존재하지 않습니다";
-      }
+	@GetMapping("/usr/article/showDetail")
+	@ResponseBody
 
-      return foundArticle;
-   }
+	public ResultData<Article> showDetail(int id) {
 
-   @GetMapping("/usr/article/doModify")
-   @ResponseBody
-   public String doModify(int id, String title, String body) {
+		Article foundArticle = articleService.getArticleById(id);
 
-      Article foundArticle = articleService.getArticleById(id);
+		if (foundArticle == null) {
+			return ResultData.from("F-1", String.format("%d번 게시물은 존재하지 않습니다", id));
+		}
 
-      if (foundArticle == null) {
-         return id + "번 게시물은 존재하지 않습니다";
-      }
+		return ResultData.from("S-1", String.format("%d번 게시물 상세보기", id), foundArticle);
+	}
 
-      articleService.modifyArticle(id, title, body);
+	@GetMapping("/usr/article/doModify")
+	@ResponseBody
+	public ResultData<Article> doModify(int id, String title, String body) {
 
-      return id + "번 게시물을 정상적으로 수정했습니다";
-   }
+		Article foundArticle = articleService.getArticleById(id);
 
-   @GetMapping("/usr/article/doDelete")
-   @ResponseBody
-   public String doDelete(int id) {
+		if (foundArticle == null) {
+			return ResultData.from("F-1", String.format("%d번 게시물은 존재하지 않습니다", id));
+		}
 
-      Article foundArticle = articleService.getArticleById(id);
+		articleService.modifyArticle(id, title, body);
 
-      if (foundArticle == null) {
-         return id + "번 게시물은 존재하지 않습니다";
-      }
+		return ResultData.from("S-1", String.format("%d번 게시물을 수정했습니다", id), articleService.getArticleById(id));
+	}
 
-      articleService.deleteArticle(id);
+	@GetMapping("/usr/article/doDelete")
+	@ResponseBody
+	public ResultData doDelete(int id) {
 
-      return id + "번 게시물을 정상적으로 삭제했습니다";
-   }
+		Article foundArticle = articleService.getArticleById(id);
+
+		if (foundArticle == null) {
+			return ResultData.from("F-1", String.format("%d번 게시물은 존재하지 않습니다", id));
+		}
+
+		articleService.deleteArticle(id);
+		return ResultData.from("S-1", String.format("%d번 게시물을 삭제했습니다", id));
+	}
 }
