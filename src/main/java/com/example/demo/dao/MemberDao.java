@@ -8,6 +8,7 @@ import com.example.demo.dto.Member;
 
 @Mapper
 public interface MemberDao {
+
 	@Insert("""
 			INSERT INTO `member`
 				SET regDate = NOW()
@@ -22,6 +23,7 @@ public interface MemberDao {
 			SELECT *
 				FROM `member`
 				WHERE loginId = #{loginID}
+				WHERE loginId = #{loginId}
 			""")
 	Member getMemberByLoginId(String loginId);
 

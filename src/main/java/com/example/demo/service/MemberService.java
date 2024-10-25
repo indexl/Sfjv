@@ -18,15 +18,25 @@ public class MemberService {
 		memberDao.joinMember(loginId, loginPw, name);
 	}
 
+	
 	public Member getMemberByLoginId(String loginId) {
 		return memberDao.getMemberByLoginId(loginId);
 	}
 
+	
 	public Member getMemberById(int id) {
 		return memberDao.getMemberById(id);
 	}
 
+	
 	public int getLastInsertId() {
 		return memberDao.getLastInsertId();
+	}
+
+	
+	public void loginMember(String loginId, String loginPw) {
+		this.memberDao = memberDao;
+	
+		
 	}
 }
