@@ -13,4 +13,9 @@ public class Article {
    private String updateDate;
    private String title;
    private String body;
+
+   public int getMemberId() {
+	
+	return 0;
+}
 }

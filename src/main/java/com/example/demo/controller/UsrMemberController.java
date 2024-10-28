@@ -36,21 +36,13 @@ public class UsrMemberController {
 
 		if (Util.isEmpty(loginPw)) {
 			return ResultData.from("F-3", "비밀번호를 입력해주세요");
-		}
-		if (Util.isEmpty(name)) {
-			return ResultData.from("F-4", "이름을 입력해주세요");
-		}
+	
 
-		if (loginPw.equals(loginPwChk) == false) {
-			return ResultData.from("F-5", "비밀번호가 일치하지 않습니다");
-		}
 
-		memberService.joinMember(loginId, loginPw, name);
 
-		int id = memberService.getLastInsertId();
+	
 
-		return ResultData.from("S-1", String.format("[ %s ] 님이 가입되었습니다", loginId), memberService.getMemberById(id));
-	}
+	
 
 	@GetMapping("/usr/member/doLogin")
 	@ResponseBody
