@@ -42,9 +42,6 @@ public class UsrArticleController {
 			return ResultData.from("F-2", "제목을 입력해주세요");
 		}
 
-		if (Util.isEmpty(body)) {
-			return ResultData.from("F-3", "내용을 입력해주세요");
-		}
 
 		articleService.writeArticle(loginedMemberId, title, body);
 

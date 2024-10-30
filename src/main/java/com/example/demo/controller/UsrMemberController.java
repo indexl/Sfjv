@@ -39,11 +39,6 @@ public class UsrMemberController {
 	
 
 
-
-	
-
-	
-
 	@GetMapping("/usr/member/doLogin")
 	@ResponseBody
 		
