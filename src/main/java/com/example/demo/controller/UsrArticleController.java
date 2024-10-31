@@ -34,14 +34,6 @@ public class UsrArticleController {
 			loginedMemberId = (int) session.getAttribute("loginedMemberId");
 		}
 
-		if (loginedMemberId == -1) {
-			return ResultData.from("F-1", "로그인 후 이용할 수 있는 기능입니다");
-		}
-
-		if (Util.isEmpty(title)) {
-			return ResultData.from("F-2", "제목을 입력해주세요");
-		}
-
 
 		articleService.writeArticle(loginedMemberId, title, body);
 
