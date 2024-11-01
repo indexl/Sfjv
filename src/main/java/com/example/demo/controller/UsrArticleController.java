@@ -60,10 +60,6 @@ public class UsrArticleController {
 
 		Article foundArticle = articleService.getArticleById(id);
 
-		if (foundArticle == null) {
-			return ResultData.from("F-1", String.format("%d번 게시물은 존재하지 않습니다", id));
-		}
-
 		return ResultData.from("S-1", String.format("%d번 게시물 상세보기", id), foundArticle);
 	}
 
@@ -83,9 +79,7 @@ public class UsrArticleController {
 
 		Article foundArticle = articleService.getArticleById(id);
 
-		if (foundArticle == null) {
-			return ResultData.from("F-1", String.format("%d번 게시물은 존재하지 않습니다", id));
-		}
+
 
 		if (foundArticle.getMemberId() != loginedMemberId) {
 			return ResultData.from("F-3", "해당 게시물에 대한 수정 권한이 없습니다");
@@ -104,9 +98,7 @@ public class UsrArticleController {
 
 		Article foundArticle = articleService.getArticleById(id);
 
-		if (foundArticle == null) {
-			return ResultData.from("F-1", String.format("%d번 게시물은 존재하지 않습니다", id));
-		}
+	
 
 		if (foundArticle.getMemberId() != loginedMemberId) {
 			return ResultData.from("F-3", "해당 게시물에 대한 삭제 권한이 없습니다");
