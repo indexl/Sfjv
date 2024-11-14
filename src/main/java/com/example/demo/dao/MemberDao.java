@@ -22,7 +22,6 @@ public interface MemberDao {
 	@Select("""
 			SELECT *
 				FROM `member`
-				WHERE loginId = #{loginID}
 				WHERE loginId = #{loginId}
 			""")
 	Member getMemberByLoginId(String loginId);
@@ -38,5 +37,5 @@ public interface MemberDao {
 			SELECT LAST_INSERT_ID();
 			""")
 	int getLastInsertId();
-
+	
 }
