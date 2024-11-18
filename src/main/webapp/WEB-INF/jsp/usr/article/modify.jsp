@@ -1,10 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8"%>
 <%@ taglib uri="jakarta.tags.core" prefix="c"%>
 
-<c:set var="pageTitle" value="상세보기" />
+<c:set var="pageTitle" value="수정" />
 
-<%@ include file="/WEB-INF/jsp/common/header.jsp"%>
+<%@ include file="/WEB-INF/jsp/common/header.jsp" %>
 
 <section class="mt-8">
 	<div class="container mx-auto">
@@ -36,20 +36,22 @@
 				</tr>
 			</table>
 		</div>
-
+		
 		<div class="btns mt-3 text-sm flex justify-between">
 			<button onclick="history.back();">뒤로가기</button>
+			
+		
+			
+		<div class="btns mt-3 text-sm flex justify-between">
+			<button onclick="history.back();">수정하기</button>
+			
 
-
-	
 				<c:if test="${rq.getLoginedMemberId() == article.getMemberId() }">
-					<button onclick="history.back();">뒤로가기</button>
-					
 					<a onclick="if(confirm('정말 삭제하시겠습니까?') == false) return false;"
 						href="doDelete?id=${article.getId() }">삭제</a>
 				</c:if>
 			</div>
-		</div>
+	</div>
 </section>
 
-<%@ include file="/WEB-INF/jsp/common/footer.jsp"%>
+<%@ include file="/WEB-INF/jsp/common/footer.jsp" %>
