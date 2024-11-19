@@ -8,8 +8,8 @@
 
 <section class="mt-8">
 	<div class="container mx-auto">
-		<div class="table-box">
-			<table>
+		<div class="w-9/12 mx-auto">
+			<table class="table table-lg">
 				<thead>
 					<tr>
 						<th>번호</th>
@@ -20,9 +20,9 @@
 				</thead>
 				<tbody>
 					<c:forEach var="article" items="${articles }">
-						<tr>
+						<tr class="hover">
 							<td>${article.getId() }</td>
-							<td class="hover:underline"><a href="detail?id=${article.getId() }">${article.getTitle() }</a></td>
+							<td class="link link-hover"><a href="detail?id=${article.getId() }">${article.getTitle() }</a></td>
 							<td>${article.getLoginId() }</td>
 							<td>${article.getRegDate().substring(2,16) }</td>
 						</tr>
@@ -30,6 +30,12 @@
 				</tbody>
 			</table>
 		</div>
+		
+		<c:if test="${rq.getLoginedMemberId() != -1 }">
+			<div class="w-9/12 mx-auto flex justify-end my-3">
+				<a class="btn btn-active btn-sm" href="write">글쓰기</a>
+			</div>
+		</c:if>
 	</div>
 </section>
 
