@@ -10,6 +10,7 @@ import jakarta.servlet.http.HttpServletResponse;
 
 @Component
 public class BeforeActionInterceptor implements HandlerInterceptor {
+
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 			throws Exception {
@@ -20,4 +21,5 @@ public class BeforeActionInterceptor implements HandlerInterceptor {
 		
 		return HandlerInterceptor.super.preHandle(request, response, handler);
 	}
+
 }

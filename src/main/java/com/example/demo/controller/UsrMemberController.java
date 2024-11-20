@@ -22,6 +22,11 @@ public class UsrMemberController {
 		this.memberService = memberService;
 	}
 	
+	    @GetMapping("/usr/member/join")
+	    public String showJoinPage() {
+	        return "usr/member/join";
+	    }
+	
 	@GetMapping("/usr/member/doJoin")
 	@ResponseBody
 	public ResultData<Member> doJoin(String loginId, String loginPw, String loginPwChk, String name) {
@@ -64,7 +69,7 @@ public class UsrMemberController {
 	public String doLogin(HttpServletRequest req, String loginId, String loginPw) {
 		
 		Rq rq = (Rq) req.getAttribute("rq");
-		
+
 		Member member = memberService.getMemberByLoginId(loginId);
 		
 		if (member == null) {

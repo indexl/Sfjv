@@ -37,4 +37,5 @@ public interface MemberDao {
 			SELECT LAST_INSERT_ID();
 			""")
 	int getLastInsertId();
+	
 }
