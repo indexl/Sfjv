@@ -17,48 +17,27 @@
 <!-- common css -->
 <link rel="stylesheet" href="/resource/common.css" />
 </head>
-<body class="bg-black">
-	<div class="h-20 flex container mx-auto text-3xl bg-green-600 text-black">
-		<div>
-			<a class="h-full px-3 flex items-center font-bold hover:text-white" 
-				href="${pageContext.request.contextPath}/">로고</a>
-		</div>
+<body>
+	<div class="h-20 flex container mx-auto text-3xl">
+		<div><a class="h-full px-3 flex items-center" href="${pageContext.request.contextPath}/">로고</a></div>
 		<div class="grow"></div>
 		<ul class="flex">
-		    <li class="link link-hover">
-		        <a class="h-full px-3 flex items-center hover:text-white" 
-		            href="${pageContext.request.contextPath}/">HOME</a>
-		    </li>
-		    <li class="link link-hover">
-		        <a class="h-full px-3 flex items-center hover:text-white" 
-		            href="${pageContext.request.contextPath}/usr/article/list?boardId=1">NOTICE</a>
-		    </li>
-		    <li class="link link-hover">
-		        <a class="h-full px-3 flex items-center hover:text-white" 
-		            href="${pageContext.request.contextPath}/usr/article/list?boardId=2">FREE</a>
-		    </li>
-		    <c:if test="${rq.getLoginedMemberId() == -1 }">
-		        <li class="link link-hover">
-		            <a class="h-full px-3 flex items-center hover:text-white" 
-		                href="${pageContext.request.contextPath}/usr/member/login">LOGIN</a>
-		        </li>
-		        <li class="link link-hover">
-		            <a class="h-full px-3 flex items-center hover:text-white" 
-		                href="${pageContext.request.contextPath}/usr/member/join">회원가입</a>
-		        </li>
-		    </c:if>
-		    <c:if test="${rq.getLoginedMemberId() != -1 }">
-		        <li class="link link-hover">
-		            <a class="h-full px-3 flex items-center hover:text-white" 
-		                href="${pageContext.request.contextPath}/usr/member/doLogout">LOGOUT</a>
-		        </li>
-		    </c:if>
+			<li class="link link-hover"><a class="h-full px-3 flex items-center" href="${pageContext.request.contextPath}/">HOME</a></li>
+			<li class="link link-hover"><a class="h-full px-3 flex items-center" href="${pageContext.request.contextPath}/usr/article/list?boardId=1">NOTICE</a></li>
+			<li class="link link-hover"><a class="h-full px-3 flex items-center" href="${pageContext.request.contextPath}/usr/article/list?boardId=2">FREE</a></li>
+			<c:if test="${rq.getLoginedMemberId() == -1 }">
+				<li class="link link-hover"><a class="h-full px-3 flex items-center" href="${pageContext.request.contextPath}/usr/member/join">JOIN</a></li>
+				<li class="link link-hover"><a class="h-full px-3 flex items-center" href="${pageContext.request.contextPath}/usr/member/login">LOGIN</a></li>
+			</c:if>
+			<c:if test="${rq.getLoginedMemberId() != -1 }">
+				<li class="link link-hover"><a class="h-full px-3 flex items-center" href="${pageContext.request.contextPath}/usr/member/myPage">MYPAGE</a></li>
+				<li class="link link-hover"><a class="h-full px-3 flex items-center" href="${pageContext.request.contextPath}/usr/member/doLogout">LOGOUT</a></li>
+			</c:if>
 		</ul>
 	</div>
+
 	<section class="my-4 text-2xl">
-		<div class="container mx-auto bg-green-100 p-4 rounded shadow">
-			<div class="font-bold text-green-600">${pageTitle } 페이지</div>
+		<div class="container mx-auto">
+			<div>${pageTitle }&nbsp;페이지</div>
 		</div>
 	</section>
-</body>
-</html>
