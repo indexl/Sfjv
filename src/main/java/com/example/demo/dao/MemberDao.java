@@ -13,13 +13,13 @@ public interface MemberDao {
 	@Insert("""
 			INSERT INTO `member`
 				SET regDate = NOW()
-					, updateDate = NOW()
-					, loginId = #{loginId}
-					, loginPw = #{loginPw}
-					, name = #{name}
+				, updateDate = NOW()
+				, loginId = #{loginId}
+				, loginPw = #{loginPw}
+				, name = #{name}
 			""")
 	void joinMember(String loginId, String loginPw, String name);
-
+	
 	@Select("""
 			SELECT *
 				FROM `member`

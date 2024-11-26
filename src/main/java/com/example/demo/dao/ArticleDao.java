@@ -24,7 +24,7 @@ public interface ArticleDao {
 					, `body` = #{body}
 			""")
 	public void writeArticle(int loginedMemberId, int boardId, String title, String body);
-
+	
 	@Select("""
 			SELECT a.*
 					, m.loginId
@@ -36,7 +36,7 @@ public interface ArticleDao {
 				LIMIT #{limitFrom}, 10
 			""")
 	public List<Article> getArticles(int boardId, int limitFrom);
-
+	
 	@Select("""
 			SELECT a.*
 					, m.loginId
@@ -55,7 +55,7 @@ public interface ArticleDao {
 				WHERE id = #{id}
 			""")
 	public void modifyArticle(int id, String title, String body);
-
+	
 	@Delete("""
 			DELETE FROM article
 				WHERE id = #{id}
@@ -66,7 +66,7 @@ public interface ArticleDao {
 			SELECT LAST_INSERT_ID();
 			""")
 	public int getLastInsertId();
-
+	
 	@Select("""
 			SELECT *
 				FROM board

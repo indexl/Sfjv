@@ -107,7 +107,7 @@ public class UsrArticleController {
 		
 		return Util.jsReturn(String.format("%d번 게시물을 수정했습니다", id), String.format("detail?id=%d", id));
 	}
-
+	
 	@GetMapping("/usr/article/doDelete")
 	@ResponseBody
 	public String doDelete(int id) {

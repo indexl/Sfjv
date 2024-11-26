@@ -47,5 +47,5 @@ public class UsrReplyController {
 		replyService.deleteReply(id);
 		
 		return Util.jsReturn(String.format("%d번 댓글을 삭제했습니다", id), String.format("../article/detail?id=%d", relId));
-	}	
+	}
 }

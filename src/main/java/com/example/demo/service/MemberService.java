@@ -13,11 +13,11 @@ public class MemberService {
 	public MemberService(MemberDao memberDao) {
 		this.memberDao = memberDao;
 	}
-
+	
 	public void joinMember(String loginId, String loginPw, String name) {
 		memberDao.joinMember(loginId, loginPw, name);
 	}
-
+	
 	public Member getMemberByLoginId(String loginId) {
 		return memberDao.getMemberByLoginId(loginId);
 	}
