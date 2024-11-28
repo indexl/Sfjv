@@ -24,19 +24,42 @@ public interface ArticleDao {
 					, `body` = #{body}
 			""")
 	public void writeArticle(int loginedMemberId, int boardId, String title, String body);
-	
+
 	@Select("""
+			<script>
 			SELECT a.*
 					, m.loginId
+					, IFNULL(SUM(l.point), 0) AS `like`
 				FROM article AS a
 				INNER JOIN `member` AS m
 				ON a.memberId = m.id
+				LEFT JOIN likePoint AS l
+				ON l.relTypeCode = 'article'
+				AND l.relId = a.id
 				WHERE a.boardId = #{boardId}
+				<if test="searchKeyword != ''">
+					<choose>
+						<when test="searchType == 'title'">
+							AND a.title LIKE CONCAT('%', #{searchKeyword}, '%')
+						</when>
+						<when test="searchType == 'body'">
+							AND a.body LIKE CONCAT('%', #{searchKeyword}, '%')
+						</when>
+						<otherwise>
+							AND (
+								a.title LIKE CONCAT('%', #{searchKeyword}, '%')
+								OR a.body LIKE CONCAT('%', #{searchKeyword}, '%')
+							) 
+						</otherwise>
+					</choose>
+				</if>
+				GROUP BY a.id
 				ORDER BY a.id DESC
 				LIMIT #{limitFrom}, 10
+			</script>
 			""")
-	public List<Article> getArticles(int boardId, int limitFrom);
-	
+	public List<Article> getArticles(int boardId, int limitFrom, String searchType, String searchKeyword);
+
 	@Select("""
 			SELECT a.*
 					, m.loginId
@@ -55,7 +78,7 @@ public interface ArticleDao {
 				WHERE id = #{id}
 			""")
 	public void modifyArticle(int id, String title, String body);
-	
+
 	@Delete("""
 			DELETE FROM article
 				WHERE id = #{id}
@@ -66,7 +89,7 @@ public interface ArticleDao {
 			SELECT LAST_INSERT_ID();
 			""")
 	public int getLastInsertId();
-	
+
 	@Select("""
 			SELECT *
 				FROM board
@@ -75,9 +98,34 @@ public interface ArticleDao {
 	public Board getBoardById(int boardId);
 
 	@Select("""
+			<script>
 			SELECT COUNT(id)
 				FROM article
 				WHERE boardId = #{boardId}
+				<if test="searchKeyword != ''">
+					<choose>
+						<when test="searchType == 'title'">
+							AND title LIKE CONCAT('%', #{searchKeyword}, '%')
+						</when>
+						<when test="searchType == 'body'">
+							AND body LIKE CONCAT('%', #{searchKeyword}, '%')
+						</when>
+						<otherwise>
+							AND (
+								title LIKE CONCAT('%', #{searchKeyword}, '%')
+								OR body LIKE CONCAT('%', #{searchKeyword}, '%')
+							) 
+						</otherwise>
+					</choose>
+				</if>
+			</script>
 			""")
-	public int getArticlesCnt(int boardId);
+	public int getArticlesCnt(int boardId, String searchType, String searchKeyword);
+
+	@Update("""
+			UPDATE article
+				SET views = views + 1
+				WHERE id = #{id}
+			""")
+	public void increaseViews(int id);
 }
